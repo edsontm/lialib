@@ -49,7 +49,7 @@ def subsample_stratified(ds,test_size):
     _,test_idx = train_test_split(np.arange(len(ds)),test_size=test_size,shuffle=True,stratify=ds.targets)
     return torch.utils.data.SubsetRandomSampler(test_idx)
 
-def subsample_perclass(ds,sample_size):
+def subsample_perclass(ds, sample_size):
     ds.targets = np.array(ds.targets)
     index_pos=np.arange(0,len(ds))
     lselected = []
@@ -58,5 +58,32 @@ def subsample_perclass(ds,sample_size):
         selected = np.random.permutation(len(class_set))[:sample_size]
         lselected += class_set[selected].tolist()
     return torch.utils.data.SubsetRandomSampler(lselected)
+
+
+
+def split_train_test_validation(ytrue,sampler_indices,split_size=(0.8,0.1,0.1),random=True):
+    
+    ytrue = np.array(ytrue)
+    index_pos=np.arange(0,len(ytrue))
+    lselected_train = []
+    lselected_validation = []
+    lselected_test = []
+    for class_id in np.unique(ytrue):
+        class_set = index_pos[ytrue==class_id]
+        class_sample = class_set
+        class_size   = class_set.shape[0]
+        ntrain       = class_size*split_size[0]
+        nvalidation  = class_size*split_size[1]
+
+        if (random):
+            class_sample = np.random.permutation(len(class_set))
+        selected_train      = class_sample[:ntrain]
+        selected_validation = class_sample[ntrain:nvalidation]
+        selected_test       = class_sample[nvalidation:]
+
+        lselected_train      += class_set[selected_train].tolist()
+        lselected_validation += class_set[selected_validation].tolist()
+        lselected_test       += class_set[selected_train].tolist()
+    return (lselected_train,lselected_validation,lselected_test)
 
 

@@ -21,7 +21,7 @@ def test_train():
                                     transforms.Normalize(mean=[0.485, 0.456, 0.406],std=[0.229, 0.224, 0.225])])
     ds = CIFAR10('/workspace/datasets/',train=True,download=True,transform=transform)
     n_classes = len(ds.class_to_idx)
-    batch_size = 64
+    batch_size = 256
     model = models.efficientnet_v2_s(weights=models.EfficientNet_V2_S_Weights.DEFAULT)
     model.classifier[-1] = nn.Linear(model.classifier[-1].in_features,n_classes )
     #sampler = subsample_perclass(ds,100) # creates a sample of 100 images per class

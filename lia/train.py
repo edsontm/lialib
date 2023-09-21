@@ -13,7 +13,7 @@ class Trainer():
 
 def train(model,dl_train,dl_valid,device):
     epochs = 100
-    opt = optim.AdamW(model.parameters(),lr=0.004,betas=(0.899,0.999))
+    opt = optim.SGD(model.parameters(),lr=0.01)
     criterion = nn.CrossEntropyLoss()
     patience_time = 10
     stop = False
