@@ -1,3 +1,3 @@
-__all__ = ['train','eval']
+__all__ = ['train','predict']
 from .train import train
-from .eval import eval
+from .eval import predict

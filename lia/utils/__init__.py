@@ -1,5 +1,6 @@
-__all__ = ['find_lr','split','subsample_stratified','subsample_perclass']
-from .main import find_lr
-from .main import split
-from .main import subsample_stratified
-from .main import subsample_perclass
+
+__all__ = ['find_lr','split_dataset_stratified','split_dataset_perclass','split_ytrue_stratified']
+from .learning_rate import find_lr
+from .sampler import split_dataset_perclass
+from .sampler import split_dataset_stratified
+from .sampler import split_ytrue_stratified

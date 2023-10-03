@@ -4,7 +4,7 @@ import torch.optim as optim
 import torch.nn as nn
 from tqdm import tqdm
 import sklearn.metrics as metrics
-__all__ = ['train']
+__all__ = ['train','predict']
 
 class Trainer():
     def __init__(self,model):
@@ -65,4 +65,5 @@ def train(model,dl_train,dl_valid,device):
             stop = True
         print(f"epoch {epoch} loss_train {loss_train[-1]:.4f} loss_eval {avg_loss_eval:.4f} eval_acc {eval_accuracy:.4f} last_best {last_best_result}")
         epoch+=1
+
 
