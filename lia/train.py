@@ -11,11 +11,10 @@ class Trainer():
         self.model = model
         
 
-def train(model,dl_train,dl_valid,device):
+def train(model,dl_train,dl_valid,device,patience_time=10,max_epoch=100):
     epochs = 100
     opt = optim.SGD(model.parameters(),lr=0.01)
     criterion = nn.CrossEntropyLoss()
-    patience_time = 10
     stop = False
     epoch = 0
     lowest_loss_eval = 10000
@@ -62,6 +61,8 @@ def train(model,dl_train,dl_valid,device):
             torch.save(actual_state,'best_model.pth')
         last_best_result += 1
         if last_best_result > patience_time:
+            stop = True
+        if epoch == max_epoch:
             stop = True
         print(f"epoch {epoch} loss_train {loss_train[-1]:.4f} loss_eval {avg_loss_eval:.4f} eval_acc {eval_accuracy:.4f} last_best {last_best_result}")
         epoch+=1
