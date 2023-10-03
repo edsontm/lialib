@@ -76,9 +76,9 @@ def train(model,dl_train,dl_valid,device,patience_time=10,max_epoch=100,recover_
         last_best_result += 1
         if last_best_result > patience_time:
             stop = True
-        if epoch == max_epoch:
-            stop = True
-        print(f"epoch {epoch} loss_train {loss_train[-1]:.4f} loss_eval {avg_loss_eval:.4f} eval_acc {eval_accuracy:.4f} last_best {last_best_result}")
+        if epoch >= max_epoch:
+            stop =  True
+        print(f"epoch {epoch}  loss_train {loss_train[-1]:.4f} loss_eval {avg_loss_eval:.4f} eval_acc {eval_accuracy:.4f} last_best {last_best_result}")
         epoch+=1
 
 
