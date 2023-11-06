@@ -35,8 +35,8 @@ def test_train_small():
     n_classes = len(ds.class_to_idx)
     ytrue = torch.tensor(ds.targets)
     index_pos  = torch.arange(ytrue.shape[0])
-    batch_size = 256
-    sampler    = split_dataset_perclass(ds,sample_size=10000)
+    batch_size = 64
+    sampler    = split_dataset_perclass(ds,sample_size=300)
     vsample    = sampler.indices
     sets       = split_ytrue_stratified(ytrue[vsample],(0.8,0.1,0.1))
     itrain     = index_pos[vsample][sets[0]]
@@ -57,7 +57,6 @@ def test_train_small():
 
     #train
     
-    lr                        = find_lr(model,dl_train)
     train(model,dl_train,dl_val,device,recover_checkpoint='best_model.pth')
     #train(model,dl_train,dl_val,device)
     ytrue,pred = predict(model,dl_test,device)

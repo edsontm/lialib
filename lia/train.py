@@ -4,6 +4,7 @@ import torch.optim as optim
 import torch.nn as nn
 from tqdm import tqdm
 import sklearn.metrics as metrics
+import lia.hypergrad.baydin as baydin
 __all__ = ['train','predict']
 
 class Trainer():
@@ -12,7 +13,7 @@ class Trainer():
         
 
 def train(model,dl_train,dl_valid,device,patience_time=10,max_epoch=100,recover_checkpoint=None):
-    opt = optim.SGD(model.parameters(),lr=0.01)
+    opt = baydin.AdamHD(model.parameters(),lr=0.01)
     criterion = nn.CrossEntropyLoss()
     stop = False
     epoch = 0
@@ -78,7 +79,7 @@ def train(model,dl_train,dl_valid,device,patience_time=10,max_epoch=100,recover_
             stop = True
         if epoch >= max_epoch:
             stop =  True
-        print(f"epoch {epoch}  loss_train {loss_train[-1]:.4f} loss_eval {avg_loss_eval:.4f} eval_acc {eval_accuracy:.4f} last_best {last_best_result}")
+        print(f"epoch {epoch}  loss_train {loss_train[-1]:.4f} loss_eval {avg_loss_eval:.4f} eval_acc {eval_accuracy:.4f} last_best {last_best_result} lr {opt.param_groups[0]['lr']}")
         epoch+=1
 
 
