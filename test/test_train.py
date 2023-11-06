@@ -23,7 +23,7 @@ torch.manual_seed(43)
 
 device = torch.device('cuda:0') if torch.cuda.is_available() else torch.device('cpu') 
 
-
+ 
 
 def test_train_small():
     # prepare data
