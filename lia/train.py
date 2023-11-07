@@ -13,7 +13,7 @@ class Trainer():
         
 
 def train(model,dl_train,dl_valid,device,patience_time=10,max_epoch=100,recover_checkpoint=None):
-    opt = baydin.AdamHD(model.parameters(),lr=0.01)
+    opt = baydin.AdamHD(model.parameters(),lr=0.001)
     criterion = nn.CrossEntropyLoss()
     stop = False
     epoch = 0
