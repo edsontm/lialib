@@ -1,0 +1,7 @@
+FROM nvcr.io/nvidia/pytorch:23.08-py3
+RUN apt-get update && \
+      apt-get -y install sudo
+RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 ubuntu
+USER ubuntu
+WORKDIR /home/ubuntu
+
