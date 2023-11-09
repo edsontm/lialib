@@ -13,6 +13,7 @@ from lia import predict
 from lia.utils import split_dataset_perclass
 from lia.utils import split_dataset_stratified
 from lia.utils import split_ytrue_stratified
+from lia.utils import load_model
 import numpy as np
 import random
 random.seed(43)
@@ -36,7 +37,7 @@ def test_train_small():
     ytrue = torch.tensor(ds.targets)
     index_pos  = torch.arange(ytrue.shape[0])
     batch_size = 1024
-    sampler    = split_dataset_perclass(ds,sample_size=10000)
+    sampler    = split_dataset_perclass(ds,sample_size=100)
     vsample    = sampler.indices
     sets       = split_ytrue_stratified(ytrue[vsample],(0.8,0.1,0.1))
     itrain     = index_pos[vsample][sets[0]]
@@ -58,7 +59,8 @@ def test_train_small():
     #train
     
     #train(model,dl_train,dl_val,device,recover_checkpoint='best_model.pth')
-    train(model,dl_train,dl_val,device)
+    train(model,dl_train,dl_val,device,patience_time=2)
+    model.load_state_dict(load_model('best_model.pth'))
     ytrue,pred = predict(model,dl_test,device)
     print(metrics.classification_report(ytrue,pred))
 
