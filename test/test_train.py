@@ -58,8 +58,8 @@ def test_train_small():
 
     #train
     
-    #train(model,dl_train,dl_val,device,recover_checkpoint='best_model.pth')
-    train(model,dl_train,dl_val,device,patience_time=2)
+    train(model,dl_train,dl_val,device,recover_checkpoint='best_model.pth')
+    #train(model,dl_train,dl_val,device,patience_time=2)
     model.load_state_dict(load_model('best_model.pth'))
     ytrue,pred = predict(model,dl_test,device)
     print(metrics.classification_report(ytrue,pred))
